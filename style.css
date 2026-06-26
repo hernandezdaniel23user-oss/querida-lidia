@@ -1,0 +1,272 @@
+/* Estilos Base del Escenario */
+body {
+    background-color: #fce4ec; /* Fondo rosa pastel */
+    font-family: 'Georgia', serif;
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    perspective: 1500px; /* Perspectiva para el efecto 3D */
+}
+
+/* El Contenedor del Libro - Adaptable para Móviles */
+.book {
+    position: relative;
+    width: 90vw;
+    max-width: 380px;
+    height: 540px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    transform-style: preserve-3d;
+    transition: transform 0.5s;
+    z-index: 5;
+}
+
+/* Cada hoja física del libro */
+.paper {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    transform-origin: left center; /* Eje de giro en el lomo izquierdo */
+    transform-style: preserve-3d;
+    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Caras de las hojas (Frente y Vuelta) */
+.front, .back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: #fffdf9; /* Color de hoja de libro real */
+    box-sizing: border-box;
+    padding: 28px;
+    backface-visibility: hidden; /* Oculta la parte trasera al voltear */
+    box-shadow: inset 3px 0 10px rgba(0,0,0,0.05);
+    border-radius: 4px 15px 15px 4px;
+}
+
+.back {
+    transform: rotateY(180deg); /* El reverso empieza volteado */
+}
+
+/* Control de capas inicial para que las hojas se apilen en orden */
+#p1 { z-index: 5; }
+#p2 { z-index: 4; }
+#p3 { z-index: 3; }
+#p4 { z-index: 2; }
+#p5 { z-index: 1; }
+
+/* Estilos de la Portada */
+.cover-front {
+    background: linear-gradient(135deg, #d81b60, #ec407a);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cover-content { 
+    text-align: center; 
+}
+
+.cover-front h1 { 
+    font-size: 32px; 
+    margin: 0;
+    text-shadow: 1px 1px 4px rgba(0,0,0,0.2);
+}
+
+.seal { 
+    font-size: 60px; 
+    margin-top: 20px; 
+}
+
+/* Contenidos de Texto Interno de las Páginas */
+.page-content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    position: relative;
+}
+
+h2 {
+    color: #d81b60;
+    font-size: 18px;
+    margin-top: 0;
+    margin-bottom: 12px;
+    border-bottom: 1px dashed #f8bbd0;
+    padding-bottom: 6px;
+}
+
+p {
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: #3a3a3a;
+    text-align: justify;
+    margin-bottom: 10px;
+}
+
+.firma {
+    text-align: right;
+    font-weight: bold;
+    color: #d81b60;
+    font-style: italic;
+    margin-top: auto; /* Empuja la firma al fondo del texto */
+    padding-bottom: 15px;
+}
+
+.page-number {
+    position: absolute;
+    bottom: -5px;
+    font-size: 11px;
+    color: #999;
+}
+.page-inside-left .page-number { left: 0px; }
+.page-inside-right .page-number { right: 0px; }
+
+/* Contraportada Final */
+.cover-back {
+    background: linear-gradient(135deg, #ec407a, #d81b60);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cover-back-hidden {
+    background-color: #d81b60;
+}
+
+.fin { 
+    font-size: 16px; 
+    font-style: italic; 
+}
+
+.heart { 
+    font-size: 45px; 
+    margin-top: 15px; 
+    text-align: center; 
+}
+
+/* Contenedor Adaptable para la Imagen */
+.image-container {
+    width: 100%;
+    height: 180px; /* Altura ideal fija para no romper el espacio de la hoja */
+    margin-top: auto; /* Posiciona la foto en la parte inferior */
+    margin-bottom: 10px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    border: 2px solid #f8bbd0; /* Delicado borde rosa estilo marco */
+}
+
+/* Ajuste de la foto interna */
+.book-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Centra y adapta la foto para que no se deforme */
+    display: block;
+}
+
+/* BOTONES DE NAVEGACIÓN (ABAJO DEL LIBRO) */
+.controls {
+    margin-top: 30px;
+    display: flex;
+    gap: 20px;
+    z-index: 100;
+}
+
+.controls button {
+    padding: 10px 20px;
+    font-size: 15px;
+    font-family: 'Georgia', serif;
+    background-color: #ffffff;
+    color: #d81b60;
+    border: 2px solid #f8bbd0;
+    border-radius: 25px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+
+.controls button:hover {
+    background-color: #d81b60;
+    color: white;
+    transform: translateY(-2px);
+}
+
+.controls button:active {
+    transform: translateY(0);
+}
+
+/* Clase de animación asignada por JS */
+.flipped {
+    transform: rotateY(-180deg);
+}
+
+/* --- EFECTOS DE DISEÑO DE LIBRO REAL --- */
+.front::after, .back::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 30px;
+    height: 100%;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.front::after {
+    left: 0;
+    background: linear-gradient(to right, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0) 100%);
+}
+
+.back::after {
+    right: 0;
+    background: linear-gradient(to left, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0) 100%);
+}
+
+/* Estilo para los corazones que caen */
+.heart-fall {
+    position: absolute;
+    color: #ff85a2;
+    pointer-events: none;
+    animation: fall linear forwards;
+    z-index: 0;
+    opacity: 0.7;
+}
+
+@keyframes fall {
+    0% { transform: translateY(-50px) rotate(0deg); opacity: 0; }
+    10% { opacity: 0.6; }
+    90% { opacity: 0.6; }
+    100% { transform: translateY(105vh) rotate(360deg); opacity: 0; }
+}
+
+/* --- AJUSTES EXCLUSIVOS PARA PANTALLAS DE CELULARES --- */
+@media (max-width: 480px) {
+    .book {
+        height: 80vh;
+        max-height: 500px;
+    }
+    
+    .front, .back {
+        padding: 20px;
+    }
+
+    .cover-front h1 { font-size: 26px !important; }
+    h2 { font-size: 16px !important; margin-bottom: 8px; }
+    p { font-size: 12px !important; line-height: 1.4; margin-bottom: 6px; }
+    .firma { font-size: 12px; padding-bottom: 5px; }
+    .image-container { height: 130px; }
+    
+    .controls button {
+        padding: 8px 16px;
+        font-size: 14px;
+    }
+}
