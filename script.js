@@ -1,5 +1,6 @@
 const prevBtn = document.querySelector("#prev-btn");
 const nextBtn = document.querySelector("#next-btn");
+const book = document.querySelector("#book"); // Capturamos el contenedor del libro
 
 // Capturamos las 5 hojas físicas
 const papers = [
@@ -14,7 +15,6 @@ let currentLocation = 1;
 let numOfPapers = 5;
 let maxLocation = numOfPapers + 1;
 
-// Eventos de los botones de navegación
 prevBtn.addEventListener("click", goPrevPage);
 nextBtn.addEventListener("click", goNextPage);
 
@@ -23,16 +23,28 @@ function goNextPage() {
         const currentPaper = papers[currentLocation - 1];
         currentPaper.classList.add("flipped");
         currentPaper.style.zIndex = currentLocation;
+        
         currentLocation++;
+        
+        // NUEVO: Si pasa la portada en un celular, añade la clase para desplazar y centrar el libro
+        if (currentLocation > 1 && window.innerWidth <= 480) {
+            book.classList.add("opened-mobile");
+        }
     }
 }
 
 function goPrevPage() {
     if (currentLocation > 1) {
         currentLocation--;
+        
         const currentPaper = papers[currentLocation - 1];
         currentPaper.classList.remove("flipped");
         currentPaper.style.zIndex = numOfPapers - currentLocation + 1;
+        
+        // NUEVO: Si regresa a la portada, vuelve a centrar el libro cerrado
+        if (currentLocation === 1 && window.innerWidth <= 480) {
+            book.classList.remove("opened-mobile");
+        }
     }
 }
 
